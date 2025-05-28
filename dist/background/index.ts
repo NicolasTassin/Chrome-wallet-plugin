@@ -1,0 +1,1 @@
+chrome.runtime.onInstalled.addListener(()=>{console.log("Extension installed")});chrome.runtime.onMessage.addListener((l,n,a)=>{if(l.type==="GET_WALLET_INFO")return chrome.storage.local.get(["walletAddress","walletBalance"],e=>{a({address:e.walletAddress||null,balance:e.walletBalance||"0"})}),!0});

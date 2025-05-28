@@ -1,1 +1,0 @@
-(function(){"use strict";window.addEventListener("message",e=>{e.source===window&&e.data.type&&e.data.type==="FROM_PAGE"&&chrome.runtime.sendMessage(e.data)});const t=document.createElement("script");t.src=chrome.runtime.getURL("injected.js"),t.type="text/javascript",document.head.appendChild(t)})();

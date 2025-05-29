@@ -24,20 +24,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 // Example: Inject wallet connection button
-function injectWalletButton() {
-  const button = document.createElement('button');
-  button.textContent = 'Connect Wallet';
-  button.style.position = 'fixed';
-  button.style.bottom = '20px';
-  button.style.right = '20px';
-  button.style.zIndex = '9999';
+// function injectWalletButton() {
+//   const button = document.createElement('button');
+//   button.textContent = "Coucou c'est wazouf";
+//   button.style.position = 'fixed';
+//   button.style.bottom = '20px';
+//   button.style.right = '20px';
+//   button.style.zIndex = '9999';
   
-  button.addEventListener('click', () => {
-    chrome.runtime.sendMessage({ type: 'CONNECT_WALLET' });
-  });
+//   button.addEventListener('click', () => {
+//     chrome.runtime.sendMessage({ type: 'CONNECT_WALLET' });
+//   });
 
-  document.body.appendChild(button);
-}
+//   document.body.appendChild(button);
+// }
 
 // Initialize content script
-injectWalletButton(); 
+//injectWalletButton(); 

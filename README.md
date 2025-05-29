@@ -59,4 +59,3 @@ This will output the production-ready extension to the `dist/` folder.
 
 ---
 
-For any questions, check the code comments or ask the project maintainer.

@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# Chrome Wallet Plugin
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a Chrome extension built with React, TypeScript, and Vite. It provides a wallet plugin UI as a browser extension popup, with background and content scripts for Chrome extension functionality.
 
-Currently, two official plugins are available:
+## Project Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+/ (root)
+├── public/
+│   └── manifest.json
+├── src/
+│   ├── background/
+│   │   └── index.ts        # Background service worker (main logic for extension events)
+│   ├── content/
+│   │   └── index.ts        # Content script (runs in the context of web pages)
+│   ├── popup/
+│   │   ├── App.tsx         # Main React component for popup
+│   │   ├── App.css         # Popup component styles
+│   │   ├── index.html      # Popup HTML entry (Chrome loads this file as the popup UI; contains <div id="root"></div> for React)
+│   │   └── index.tsx       # Popup React entry point (mounts the React app into index.html at #root)
+│   └── index.css           # Global styles
+├── vite.config.ts
+└── ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **public/manifest.json**: Chrome extension manifest, references built files for popup, background, and content scripts.
+- **src/background/index.ts**: Background service worker logic (runs in the background, handles extension events).
+- **src/content/index.ts**: Content script injected into web pages.
+- **src/popup/**: All popup UI code, built with React.
+- **src/index.css**: Global styles shared across extension UIs.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Development & Testing
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 1. Install dependencies
+```bash
+npm install
 ```
+
+### 2. Build the extension
+```bash
+npm run build
+```
+This will output the production-ready extension to the `dist/` folder.
+
+### 3. Load the extension in Chrome
+1. Open `chrome://extensions/` in your browser.
+2. Enable **Developer mode** (toggle in the top right).
+3. Click **Load unpacked** and select the `dist/` folder in your project.
+4. The extension should now appear in your Chrome extensions bar.
+
+### 4. Test the extension
+- Click the extension icon to open the popup UI (React app).
+- Interact with the popup to test wallet connect/disconnect.
+- Use the background and content scripts as needed for your extension features.
+
+## Notes
+- If you make changes to the code, rebuild (`npm run build`) and reload the extension in Chrome.
+- For development with hot reload, you can use Vite's dev server for the popup UI, but Chrome extension features require a full build.
+
+---
+
+For any questions, check the code comments or ask the project maintainer.
